@@ -314,6 +314,9 @@
     <string name="pie_phone_status_no_service">无信号</string>
     <string name="pie_phone_status_airplane_mode">打开飞行模式</string>
     <string name="pie_phone_status_emergency_only">只能拨打紧急呼救电话</string>
+    <!-- Content description of the halo button in the notification panel for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_halo">打开HALO</string>
+
     <plurals name="status_bar_accessibility_recent_apps">
         <item quantity="other">1 个最近运行的应用</item>
     </plurals>
