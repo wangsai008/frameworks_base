@@ -203,19 +203,4 @@ public interface TelephonyProperties
      * Type: boolean ( true = alpha display enabled, false = alpha display disabled)
      */
     static final String PROPERTY_ALPHA_USRCNF = "persist.atel.noalpha.usrcnf";
-    /*
-     * Property that shows the status of the OMH feature
-     */
-    static final String PROPERTY_OMH_ENABLED = "persist.omh.enabled";
-
-    /**
-     * Property that can be used to set the IP version for CDMA
-     */
-    static final String PROPERTY_CDMA_IPPROTOCOL = "persist.telephony.cdma.protocol";
-
-    /**
-     * Property that can be used to set the IP version for CDMA when roaming
-     */
-    static final String PROPERTY_CDMA_ROAMING_IPPROTOCOL = "persist.telephony.cdma.rproto";
-
 }
