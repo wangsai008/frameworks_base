@@ -414,7 +414,7 @@ public class PhoneStatusBarView extends PanelBar {
     protected void updateSettings() {
         mAlpha = 1.0f - Settings.System.getFloat(mContext.getContentResolver(),
                        Settings.System.STATUS_BAR_ALPHA,
-                       0.0f);
+                       0.5f);
         mAlphaMode = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.STATUS_NAV_BAR_ALPHA_MODE, 1);
         mStatusBarColor = Settings.System.getInt(mContext.getContentResolver(),
