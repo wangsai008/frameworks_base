@@ -470,8 +470,8 @@ public class SignalStrength implements Parcelable {
                 /* We don't know cdma, use evdo */
                 level = evdoLevel;
             } else {
-                /* We know both, use cdma */
-                level = cdmaLevel;
+                /* We know both, use the highest level */
+                level = cdmaLevel > evdoLevel ? cdmaLevel : evdoLevel;
             }
         }
         if (DBG) log("getLevel=" + level);
@@ -502,8 +502,8 @@ public class SignalStrength implements Parcelable {
                 /* We don't know cdma use, evdo */
                 asuLevel = evdoAsuLevel;
             } else {
-                /* We know both, use cdma */
-                asuLevel = cdmaAsuLevel;
+                /* We know both, use the highest level */
+                asuLevel = cdmaAsuLevel > evdoAsuLevel ? cdmaAsuLevel : evdoAsuLevel;
             }
         }
         if (DBG) log("getAsuLevel=" + asuLevel);
@@ -602,9 +602,9 @@ public class SignalStrength implements Parcelable {
         int levelDbm;
         int levelEcio;
 
-        if (cdmaDbm >= -80) levelDbm = SIGNAL_STRENGTH_GREAT;
-        else if (cdmaDbm >= -90) levelDbm = SIGNAL_STRENGTH_GOOD;
-        else if (cdmaDbm >= -100) levelDbm = SIGNAL_STRENGTH_MODERATE;
+        if (cdmaDbm >= -85) levelDbm = SIGNAL_STRENGTH_GREAT;
+        else if (cdmaDbm >= -95) levelDbm = SIGNAL_STRENGTH_GOOD;
+        else if (cdmaDbm >= -105) levelDbm = SIGNAL_STRENGTH_MODERATE;
         else if (cdmaDbm >= -110) levelDbm = SIGNAL_STRENGTH_POOR;
         else levelDbm = SIGNAL_STRENGTH_NONE_OR_UNKNOWN;
 
@@ -662,9 +662,9 @@ public class SignalStrength implements Parcelable {
         int levelEvdoDbm;
         int levelEvdoSnr;
 
-        if (evdoDbm >= -80) levelEvdoDbm = SIGNAL_STRENGTH_GREAT;
-        else if (evdoDbm >= -90) levelEvdoDbm = SIGNAL_STRENGTH_GOOD;
-        else if (evdoDbm >= -100) levelEvdoDbm = SIGNAL_STRENGTH_MODERATE;
+        if (evdoDbm >= -85) levelEvdoDbm = SIGNAL_STRENGTH_GREAT;
+        else if (evdoDbm >= -95) levelEvdoDbm = SIGNAL_STRENGTH_GOOD;
+        else if (evdoDbm >= -105) levelEvdoDbm = SIGNAL_STRENGTH_MODERATE;
         else if (evdoDbm >= -110) levelEvdoDbm = SIGNAL_STRENGTH_POOR;
         else levelEvdoDbm = SIGNAL_STRENGTH_NONE_OR_UNKNOWN;
 
