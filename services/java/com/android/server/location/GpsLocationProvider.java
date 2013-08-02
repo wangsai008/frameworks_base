@@ -531,7 +531,7 @@ public class GpsLocationProvider implements LocationProviderInterface {
 
         if (info != null) {
             boolean dataEnabled = Settings.Global.getInt(mContext.getContentResolver(),
-                                                         Settings.Global.MOBILE_DATA, 1) == 1;
+                                                         Settings.Global.MOBILE_DATA, 0) == 1;
             boolean networkAvailable = info.isAvailable() && dataEnabled;
             String defaultApn = getSelectedApn();
             if (defaultApn == null) {
