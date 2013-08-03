@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Handler;
+import android.net.ConnectivityManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -41,6 +42,7 @@ public class MobileNetworkTile extends QuickSettingsTile implements NetworkSigna
     private String dataContentDescription;
     private String signalContentDescription;
     private boolean wifiOn = false;
+    private ConnectivityManager mCm;
     public static QuickSettingsTile mInstance;
 
     public static QuickSettingsTile getInstance(Context context, LayoutInflater inflater,
@@ -55,11 +57,19 @@ public class MobileNetworkTile extends QuickSettingsTile implements NetworkSigna
         super(context, inflater, container, qsc);
         mController = controller;
         mTileLayout = R.layout.quick_settings_tile_rssi;
+        mCm = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         mOnClick = new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
+                if (!mCm.getMobileDataEnabled()) {
+                    mCm.setMobileDataEnabled(true);
+                    updateQuickSettings();
+                } else {
+                    mCm.setMobileDataEnabled(false);
+                    updateQuickSettings();
+                }
             }
         };
         mOnLongClick = new OnLongClickListener() {
@@ -142,7 +152,11 @@ public class MobileNetworkTile extends QuickSettingsTile implements NetworkSigna
         if (mDataTypeIconId > 0) {
             iov.setImageResource(mDataTypeIconId);
         } else {
-            iov.setImageDrawable(null);
+            if (!mCm.getMobileDataEnabled()) {
+                iov.setImageResource(R.drawable.ic_qs_signal_data_off);
+            } else {
+                iov.setImageDrawable(null);
+            }
         }
         tv.setText(mLabel);
         tv.setTextSize(1, mTileTextSize);

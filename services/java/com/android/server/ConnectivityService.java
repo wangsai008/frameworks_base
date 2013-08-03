@@ -1509,7 +1509,7 @@ public class ConnectivityService extends IConnectivityManager.Stub {
         //       asynchronous.
         enforceAccessPermission();
         boolean retVal = Settings.Global.getInt(mContext.getContentResolver(),
-                Settings.Global.MOBILE_DATA, 0) == 1;
+                Settings.Global.MOBILE_DATA, 1) == 1;
         if (VDBG) log("getMobileDataEnabled returning " + retVal);
         return retVal;
     }
