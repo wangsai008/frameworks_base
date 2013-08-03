@@ -117,10 +117,10 @@ public class Traffic extends TextView {
       public void handleMessage(Message msg) {
           speed = (mTrafficStats.getTotalRxBytes() - totalRxBytes) / 1024 /3;
           totalRxBytes = mTrafficStats.getTotalRxBytes();
-          DecimalFormat DecimalFormatfnum = new DecimalFormat("##0.00");
+          DecimalFormat DecimalFormatfnum = new DecimalFormat("##0");
           if (speed / 1024 >= 1) {
               setText(DecimalFormatfnum.format(speed / 1024) + "M/s");
-          } else if (speed <= 0.0099) {
+          } else if (speed <= 1) {
               setText(DecimalFormatfnum.format(speed * 1024) + "B/s");
           } else {
               setText(DecimalFormatfnum.format(speed) + "K/s");
@@ -149,7 +149,7 @@ public class Traffic extends TextView {
   
   public void update() {
     mTrafficHandler.removeCallbacks(mRunnable);
-    mTrafficHandler.postDelayed(mRunnable, 3000);
+    mTrafficHandler.postDelayed(mRunnable, 1000);
   }
     
   Runnable mRunnable = new Runnable() {
