@@ -115,7 +115,7 @@ public class Traffic extends TextView {
     mTrafficHandler = new Handler() {
       @Override
       public void handleMessage(Message msg) {
-          speed = (mTrafficStats.getTotalRxBytes() - totalRxBytes) / 1024 /3;
+          speed = (mTrafficStats.getTotalRxBytes() - totalRxBytes) / 1024;
           totalRxBytes = mTrafficStats.getTotalRxBytes();
           DecimalFormat DecimalFormatfnum = new DecimalFormat("##0");
           if (speed / 1024 >= 1) {
