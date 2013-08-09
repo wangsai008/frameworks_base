@@ -132,7 +132,7 @@
     <string name="screen_lock">屏幕锁定</string>
     <string name="power_off">关机</string>
     <string name="reboot_system" product="tablet">重新启动平板电脑</string>
-    <string name="reboot_system" product="default">重新启动平板电脑</string>
+    <string name="reboot_system" product="default">重新启动手机</string>
     <string name="global_action_screenshot">屏幕截图</string>
     <string name="global_actions_toggle_expanded_desktop_mode">拓展桌面</string>
     <string name="global_actions_expanded_desktop_mode_on_status">启用</string>
