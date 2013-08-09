@@ -3484,7 +3484,6 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
                                     if (!mDataChanged) {
                                         performClick.run();
                                     }
-                                    mTouchModeReset = null;
                                 }
                             };
                             postDelayed(mTouchModeReset,
@@ -5281,6 +5280,7 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
 
     @Override
     protected void handleDataChanged() {
+        mIsScrolling = false;
         int count = mItemCount;
         int lastHandledItemCount = mLastHandledItemCount;
         mLastHandledItemCount = mItemCount;
