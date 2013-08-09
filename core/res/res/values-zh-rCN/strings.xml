@@ -149,10 +149,10 @@
     <string name="silent_mode_vibrate">振铃器振动</string>
     <string name="silent_mode_ring">振铃器开启</string>
     <string name="shutdown_progress">正在关机...</string>
-    <string name="shutdown_confirm" product="tablet">您的手机将会关机。</string>
+    <string name="shutdown_confirm" product="tablet">您的平板将会关机。</string>
     <string name="shutdown_confirm" product="default">您的手机将会关机。</string>
-    <string name="shutdown_confirm_reboot" product="tablet">你的平板现在将重新重启。</string>
-    <string name="shutdown_confirm_reboot" product="default">你的平板现在将重新重启。</string>
+    <string name="shutdown_confirm_reboot" product="tablet">你的平板现在将重新启动。</string>
+    <string name="shutdown_confirm_reboot" product="default">你的手机现在将重新启动。</string>
     <string name="shutdown_confirm_question">您要关机吗？</string>
     <string name="shutdown_confirm_reboot_question">你想要重启吗？</string>
     <string name="reboot_safemode_title">重新启动并进入安全模式</string>
