@@ -39,7 +39,11 @@ import android.widget.Toast;
 
 import com.android.systemui.R;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+
+import libcore.icu.ICU;
 
 public class DateView extends TextView implements OnClickListener, OnLongClickListener {
     private static final String TAG = "DateView";
@@ -119,8 +123,19 @@ public class DateView extends TextView implements OnClickListener, OnLongClickLi
     }
 
     protected void updateClock() {
-        final String dateFormat = getContext().getString(R.string.full_wday_month_day_no_year_split);
-        setText(DateFormat.format(dateFormat, new Date()));
+        final String weekdayFormat = getContext().getString(R.string.system_ui_weekday_pattern);
+        final String dateFormat = getContext().getString(R.string.system_ui_date_pattern);
+        final Locale l = Locale.getDefault();
+        final Date now = new Date();
+        String weekdayFmt = ICU.getBestDateTimePattern(weekdayFormat, l.toString());
+        String dateFmt = ICU.getBestDateTimePattern(dateFormat, l.toString());
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(new SimpleDateFormat(weekdayFmt, l).format(now));
+        builder.append("\n");
+        builder.append(new SimpleDateFormat(dateFmt, l).format(now));
+
+        setText(builder.toString());
     }
 
     private boolean isVisible() {
