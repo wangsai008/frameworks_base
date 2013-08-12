@@ -1379,12 +1379,12 @@ public abstract class BaseStatusBar extends SystemUI implements
         
         NotificationData.Entry entry = new NotificationData.Entry(key, notification, iconView,
                 createRoundIcon(notification));
-        entry.hide = entry.notification.pkg.equals("com.paranoid.halo");
+        entry.hide = entry.notification.getPackageName().equals("com.paranoid.halo");
 
         final PendingIntent contentIntent = notification.getNotification().contentIntent;
         if (contentIntent != null) {
             entry.floatingIntent = makeClicker(contentIntent,
-                    notification.pkg, notification.tag, notification.id);
+                    notification.getPackageName(), notification.getTag(), notification.getId());
             entry.floatingIntent.makeFloating(true);
         }
         
@@ -1525,7 +1525,7 @@ public abstract class BaseStatusBar extends SystemUI implements
                     bigContentView.reapply(mContext, oldEntry.getLargeView(), mOnClickHandler);
                 }
                 // update contentIntent and floatingIntent
-                final PendingIntent contentIntent = notification.getNotification.contentIntent;
+                final PendingIntent contentIntent = notification.getNotification().contentIntent;
                 if (contentIntent != null) {
                     final View.OnClickListener listener = makeClicker(contentIntent,
                             notification.getPackageName(), notification.getTag(), notification.getId());
