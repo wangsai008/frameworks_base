@@ -34,10 +34,16 @@ import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
+import android.util.Log;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 
 public class Traffic extends TextView {
   private boolean mAttached;
-  TrafficStats mTrafficStats;
   boolean showTraffic;
   Handler mHandler;
   Handler mTrafficHandler;
@@ -73,7 +79,6 @@ public class Traffic extends TextView {
     super(context, attrs, defStyle);
     mHandler = new Handler();
     SettingsObserver settingsObserver = new SettingsObserver(mHandler);
-    mTrafficStats = new TrafficStats();
     settingsObserver.observe();
     updateSettings();
   }
@@ -115,22 +120,58 @@ public class Traffic extends TextView {
     mTrafficHandler = new Handler() {
       @Override
       public void handleMessage(Message msg) {
-          speed = (mTrafficStats.getTotalRxBytes() - totalRxBytes) / 1024;
-          totalRxBytes = mTrafficStats.getTotalRxBytes();
-          DecimalFormat DecimalFormatfnum = new DecimalFormat("##0");
-          if (speed / 1024 >= 1) {
-              setText(DecimalFormatfnum.format(speed / 1024) + "M/s");
-          } else if (speed <= 1) {
-              setText(DecimalFormatfnum.format(speed * 1024) + "B/s");
-          } else {
-              setText(DecimalFormatfnum.format(speed) + "K/s");
+          speed = (getTotalReceivedBytes() - totalRxBytes) / 1024;
+          totalRxBytes = getTotalReceivedBytes();
+          if (speed >= 0) {
+            DecimalFormat DecimalFormatfnum = new DecimalFormat("##0");
+            if (speed / 1024 >= 1) {
+                setText(DecimalFormatfnum.format(speed / 1024) + "M/s");
+            } else if (speed <= 1) {
+                setText(DecimalFormatfnum.format(speed * 1024) + "B/s");
+            } else {
+                setText(DecimalFormatfnum.format(speed) + "K/s");
+            }
           }
-        update();
-        super.handleMessage(msg);
+          update();
+          super.handleMessage(msg);
       }
     };
-    totalRxBytes = mTrafficStats.getTotalRxBytes();
+    totalRxBytes = getTotalReceivedBytes();
     mTrafficHandler.sendEmptyMessage(0);
+  }
+
+  private int getTotalReceivedBytes() {
+    String line;
+    String[] segs;
+    int received = 0;
+    int i;
+    int tmp = 0;
+    boolean isNum;
+    try {
+      FileReader fr = new FileReader("/proc/net/dev");
+      BufferedReader in = new BufferedReader(fr, 500);
+      while ((line = in.readLine()) != null) {
+        line = line.trim();
+        if (line.startsWith("rmnet") || line.startsWith("eth") || line.startsWith("wlan")) {
+          segs = line.split(":")[1].split(" ");
+          for (i = 0; i < segs.length; i++) {
+            isNum = true;
+            try {
+              tmp = Integer.parseInt(segs[i]);
+            } catch (Exception e) {
+              isNum = false;
+            }
+            if (isNum == true) {
+              received = received + tmp;
+              break;
+            }
+          }
+        }
+      }
+    } catch (IOException e) {
+      return -1;
+    }
+    return received;
   }
 
   private boolean getConnectAvailable() {
